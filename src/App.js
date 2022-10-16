@@ -1,11 +1,17 @@
 
 import './App.scss';
+import FilterSection from './components/FilterSection';
+import HeaderSection from './components/HeaderSection';
+import PokemonList from './components/PokemonList';
 
 function App() {
   return (
     <>
-    <button className='btn btn-primary'> click</button>
-    <p>hi pokemon</p>
+      <div className='container'>
+        <HeaderSection />
+        <FilterSection />
+        <PokemonList />
+      </div>
     </>
   );
 }
