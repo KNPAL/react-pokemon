@@ -2,7 +2,7 @@ import "./HeaderSection.scss";
 
 function HeaderSection() {
   return (
-    <>
+    <div className="my-4">
       <h2 className="d-inline p-2" aria-label="Pokedex">
         Pokedex
       </h2>
@@ -16,7 +16,7 @@ function HeaderSection() {
       >
         Search for any Pokemon that exists on the planet
       </label>
-    </>
+    </div>
   );
 }
 
