@@ -7,7 +7,7 @@ import PokemonList from './components/PokemonList';
 function App() {
   return (
     <>
-      <div className='container-fluid h-100 mx-5'>
+      <div className='container-fluid h-100 px-5'>
         <HeaderSection />
         <FilterSection />
         <PokemonList />

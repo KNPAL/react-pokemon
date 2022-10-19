@@ -3,7 +3,7 @@ import "./HeaderSection.scss";
 function HeaderSection() {
   return (
     <div className="my-4">
-      <h2 className="d-inline p-2" aria-label="Pokedex">
+      <h2 className="d-inline pe-2" aria-label="Pokedex">
         Pokedex
       </h2>
       <div className="d-none d-md-inline">
