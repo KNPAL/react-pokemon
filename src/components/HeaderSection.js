@@ -7,7 +7,7 @@ function HeaderSection() {
         Pokedex
       </h2>
       <div className="d-none d-md-inline">
-        <div class="vr"></div>
+        <div className="vr"></div>
       </div>
       <hr className="d-block d-md-none" />
       <label
