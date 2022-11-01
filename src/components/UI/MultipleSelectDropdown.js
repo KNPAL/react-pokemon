@@ -5,9 +5,11 @@ function MultipleSelectDropdown(props) {
   const [selectedValue, setSelectedValue] = useState([]);
   const [drpDataSet, setDrpDataSet] = useState([]);
   const [drpPlaceholder, setPlaceholder] = useState("");
+  const [currentDrp,setCurrentDropdown]=useState();
 
-  const onSelectHandler = () => {
-    const selectbtn = document.querySelector(".select-btn");
+  const onSelectHandler = (event) => {
+    const selectbtn = event.target;//document.querySelector(".selectbtn");
+    setCurrentDropdown(selectbtn);
     selectbtn.classList.toggle("open");
   };
 
@@ -17,16 +19,17 @@ function MultipleSelectDropdown(props) {
   };
 
   const handler = (item) => {
+    console.log(currentDrp)
     item.classList.toggle("checked");
 
-    let checked = document.querySelectorAll(".checked"),
-      btnTex = document.querySelector(".btn-text");
+    let checked = currentDrp.nextSibling.querySelectorAll('.checked'), // document.querySelectorAll(".checked"),
+      btnTex = currentDrp.querySelector('.btnText');// document.querySelector(".btnText");
 
     setSelectedValue(checked);
 
     if (selectedValue && checked.length > 0) {
       const firstCheckedValue =
-        checked[0].querySelector(".item-text").innerHTML;
+        checked[0].querySelector(".itemtext").innerHTML;
       if (checked.length > 1) {
         const selectText = firstCheckedValue + ` + ${checked.length - 1} More`;
         btnTex.innerHTML = selectText;
@@ -62,27 +65,27 @@ function MultipleSelectDropdown(props) {
 
   return (
     <>
-      <div onClick={onSelectHandler} className="select-btn">
-        <span className="btn-text">{drpPlaceholder}</span>
-        <span className="arrow-dwn">
+      <div onClick={onSelectHandler} className='selectbtn'>
+        <span className='btnText'>{drpPlaceholder}</span>
+        <span className='arrowdwn'>
           <i className="fa-solid fa-chevron-down"></i>
         </span>
       </div>
-      <ul className="list-items">
+      <ul className='listitems'>
         {drpDataSet?.map((props) => (
-          <li key={props.name} className="item" onClick={onItemClickHandler}>
-            <span onClick={onItemChildClickHandler} className="checkbox">
+          <li key={props.name} className='item' onClick={onItemClickHandler}>
+            <span onClick={onItemChildClickHandler} className='checkbox'>
               <i
                 onClick={onItemChildClickHandler}
                 className="fa-solid fa-check check-icon"
               ></i>
             </span>
-            <span onClick={onItemChildClickHandler} className="item-text">
+            <span onClick={onItemChildClickHandler} className='itemtext'>
               {props.name}
             </span>
           </li>
         ))}
-        <li className="item">
+        <li className='item'>
           <div>
             <button
               className="btn btn-outline-primary m-2"

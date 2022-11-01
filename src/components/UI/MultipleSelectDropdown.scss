@@ -1,5 +1,5 @@
 
-.select-btn {
+.selectbtn {
   display: flex;
   height: 50px;
   align-items: center;
@@ -11,13 +11,13 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
-.select-btn .btn-text {
+.selectbtn .btnText {
   font-size: 17px;
   font-weight: 400;
   color: #333;
 }
 
-.select-btn .arrow-dwn {
+.selectbtn .arrowdwn {
   display: flex;
   height: 21px;
   width: 21px;
@@ -30,11 +30,11 @@
   transition: 0.3s;
 }
 
-.select-btn.open .arrow-dwn {
+.selectbtn.open .arrowdwn {
   transform: rotate(-180deg);
 }
 
-.list-items {
+.listitems {
   position: relative;
   margin-top: 15px;
   border-radius: 8px;
@@ -44,11 +44,11 @@
   display: none;
 }
 
-.select-btn.open ~ .list-items {
+.selectbtn.open ~ .listitems {
   display: block;
 }
 
-.list-items .item {
+.listitems .item {
   display: flex;
   align-items: center;
   list-style: none;
@@ -59,17 +59,17 @@
   border-radius: 8px;
 }
 
-.list-items .item:hover {
+.listitems .item:hover {
   background-color: #e7edfe;
 }
 
-.list-items .item:last-child{
+.listitems .item:last-child{
   border-top: 1px solid #c0c0c0;
   background-color: inherit;
   border-radius: 0%;
 }
 
-.item .item-text {
+.item .itemtext {
   font-size: 16px;
   font-weight: 400;
   color: #333;
