@@ -4,17 +4,22 @@ import useHttp from "../hooks/use-http";
 import { useEffect, useState } from "react";
 
 function PokemonList() {
-  const { isLoading, error, sendRequest: fetch } = useHttp();
+  const { isLoading, error, sendRequest: fetch1 } = useHttp();
   const [pokemonList, setPokemonlist] = useState([]);
 
-  
+
   useEffect(() => {
-    const getData = (data) => {
-      setPokemonlist(data.results);
+    const  getData =  (data) => {
+      let tempList =[];
+      data.results.forEach(element => {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${element.name}`)
+        .then(data=>data.json())
+        .then(list => {tempList.push(list); setPokemonlist(tempList)})
+      });
     };
 
-    fetch({ url: "https://pokeapi.co/api/v2/pokemon" }, getData);
-  }, [fetch]);
+    fetch1({ url: "https://pokeapi.co/api/v2/pokemon" }, getData);
+  }, [fetch1]);
 
   return (
     <>
