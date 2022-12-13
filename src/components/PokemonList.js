@@ -10,40 +10,53 @@ function PokemonList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [nextPage, setNextPage] = useState("");
+  const [previousPage, setPreviousPage] = useState("");
+
+  const onPaginationClick = (results) => {
+    const tempPokemonList = [];
+    results.forEach((element) => {
+      gethttp(`https://pokeapi.co/api/v2/pokemon/${element.name}`)
+        .then(list => {
+          tempPokemonList.push(list);
+          setPokemonlist(tempPokemonList);
+        })
+    });
+  }
+
+  const gethttp = async (url) => {
+    try {
+      const response = await fetch(url);
+      const retData = await response.json()
+      return retData;
+    } catch (error) {
+      return [];
+    }
+  }
+
+  const getPokemon = (url) => {
+    gethttp(url)
+      .then(list => {
+        setTotalCount(list.count)
+        setNextPage(list.next)
+        setPreviousPage(list.previous)
+        onPaginationClick(list.results)
+      })
+  }
+
+  const handlePaginationClick = (page, currentPage) => {
+    
+    if (page > currentPage) {
+      getPokemon(nextPage)
+    } else if (page < currentPage) {
+      getPokemon(previousPage)
+    } else {
+
+    }
+  }
 
   useEffect(() => {
-    const getData = (data) => {
-      let tempList = [];
-      setTotalCount(data.count);
-      setNextPage(data.next);
-      data.results.forEach((element) => {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${element.name}`)
-          .then((data) => data.json())
-          .then((list) => {
-            tempList.push(list);
-            setPokemonlist(tempList);
-          });
-      });
-    };
-    fetch1({ url: "https://pokeapi.co/api/v2/pokemon" }, getData);
-  }, [fetch1]);
-
-  const paginationData = (url) => {
-    const getData = (data) => {
-      let tempList = [];
-      setTotalCount(data.count);
-      setNextPage(data.next);
-      data.results.forEach((element) => {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${element.name}`)
-          .then((data) => data.json())
-          .then((list) => {
-            tempList.push(list);
-            setPokemonlist(tempList);
-          });
-      });
-    };
-    fetch1({ url }, getData);
-  };
+    getPokemon("https://pokeapi.co/api/v2/pokemon")
+  }, []);
 
   return (
     <>
@@ -65,7 +78,7 @@ function PokemonList() {
         pageSize={20}
         onPageChange={(page) => {
           setCurrentPage(page);
-          paginationData(nextPage)
+          handlePaginationClick(page, currentPage)
         }}
       />
     </>
