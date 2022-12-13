@@ -26,11 +26,19 @@ function FilterSection() {
         </div>
         <div className="col-md-2 d-md-inline d-none">
           <label className="w-100 form-label">Type</label>
-          <MultipleSelectDropdown placeholder={'Please Select Type'} dataSet={typeDataSet}/>
+          {/* <MultipleSelectDropdown placeholder={'Please Select Type'} dataSet={typeDataSet}/> */}
+          <input
+            className="w-100  form-control "
+            placeholder="Type"
+          />
         </div>
         <div className="col-md-2 d-md-inline d-none">
           <label className="w-100 form-label">Gender</label>
-          <MultipleSelectDropdown placeholder={'Please Select Gender'} dataSet={genderDataSet}/>
+          {/* <MultipleSelectDropdown placeholder={'Please Select Gender'} dataSet={genderDataSet}/> */}
+          <input
+            className="w-100  form-control "
+            placeholder="Gender"
+          />
         </div>
         <div className="col-md-2 d-none d-md-inline ">
           <label className="w-100 form-label">Stats</label>
