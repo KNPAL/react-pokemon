@@ -1,11 +1,11 @@
 import "./PokemonList.scss";
 import Card from "../components/UI/Card";
-import useHttp from "../hooks/use-http";
 import Pagination from "./UI/Pagination";
 import { useEffect, useState } from "react";
 
 function PokemonList() {
-  const { isLoading, error, sendRequest: fetch1 } = useHttp();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [pokemonList, setPokemonlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
@@ -15,22 +15,29 @@ function PokemonList() {
   const onPaginationClick = (results) => {
     const tempPokemonList = [];
     results.forEach((element) => {
-      gethttp(`https://pokeapi.co/api/v2/pokemon/${element.name}`)
-        .then(list => {
-          tempPokemonList.push(list);
-          setPokemonlist(tempPokemonList);
-        })
+      const pokemonDetail = gethttp(`https://pokeapi.co/api/v2/pokemon/${element.name}`);
+      tempPokemonList.push(pokemonDetail);
     });
+
+    Promise.all(tempPokemonList).then(values => {
+      setPokemonlist(values);
+    })
   }
 
   const gethttp = async (url) => {
+    setIsLoading(true);
+    setError(null);
+    let returnDataSet = [];
     try {
       const response = await fetch(url);
       const retData = await response.json()
-      return retData;
+      returnDataSet = retData;
     } catch (error) {
-      return [];
+      setError(error.message || "Something went wrong");
+      returnDataSet = [];
     }
+    setIsLoading(false);
+    return returnDataSet;
   }
 
   const getPokemon = (url) => {
@@ -43,15 +50,8 @@ function PokemonList() {
       })
   }
 
-  const handlePaginationClick = (page, currentPage) => {
-    
-    if (page > currentPage) {
-      getPokemon(nextPage)
-    } else if (page < currentPage) {
-      getPokemon(previousPage)
-    } else {
-
-    }
+  const handlePaginationClick = (page, totalCount) => {
+    getPokemon(`https://pokeapi.co/api/v2/pokemon?offset=${page*20}&limit=20`)
   }
 
   useEffect(() => {
@@ -78,7 +78,7 @@ function PokemonList() {
         pageSize={20}
         onPageChange={(page) => {
           setCurrentPage(page);
-          handlePaginationClick(page, currentPage)
+          handlePaginationClick(page, totalCount)
         }}
       />
     </>
