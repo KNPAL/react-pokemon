@@ -2,8 +2,12 @@ import "./PokemonList.scss";
 import Card from "../components/UI/Card";
 import Pagination from "./UI/Pagination";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function PokemonList() {
+  const dispatch = useDispatch();
+  const list = useSelector(state => state.pokemon.results);
+  console.log(list)
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [pokemonList, setPokemonlist] = useState([]);
