@@ -38,13 +38,6 @@ const pokemonSlice = createSlice({
       }
     },
 
-    showList(state,action){
-      const tempList = state.plist.sort((a,b)=>a-b);
-      // console.log(state.plist)
-      // console.log(state.plist.filter(x=>x.id>20))
-      console.log(state.pNames,state.plist)
-    }
-
   },
 });
 
