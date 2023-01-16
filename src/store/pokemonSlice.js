@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { count: 0, next: "", previous: "", results: [], ids: [],plist:[],pNames:[] };
+const initialState = { count: 0, next: "", previous: "", results: [], ids: [],plist:[],pNames:[],currentIds:[], displayList:[] };
 
 const pokemonSlice = createSlice({
   name: "pokemon",
@@ -10,6 +10,7 @@ const pokemonSlice = createSlice({
       state.count = action.payload.count;
       state.next = action.payload.next;
       state.previous = action.payload.previous;
+      state.currentIds=action.payload.results;
       action.payload.results.forEach((element) => {
         if (
           state.ids.indexOf(
@@ -35,6 +36,13 @@ const pokemonSlice = createSlice({
         state.pNames.push(action.payload.name);
         state.plist.push(action.payload)
       }
+    },
+
+    showList(state,action){
+      const tempList = state.plist.sort((a,b)=>a-b);
+      // console.log(state.plist)
+      // console.log(state.plist.filter(x=>x.id>20))
+      console.log(state.pNames,state.plist)
     }
 
   },
