@@ -3,29 +3,22 @@ import Card from "../components/UI/Card";
 import Pagination from "./UI/Pagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {pokemonSliceAction} from '../store/pokemonSlice';
 
 function PokemonList() {
   const dispatch = useDispatch();
   const list = useSelector(state => state.pokemon.results);
-  console.log(list)
+  const pDetailList = useSelector(state => state.pokemon.plist);
+  const totalCount = useSelector(state => state.pokemon.count);
+  
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [pokemonList, setPokemonlist] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
-  const [nextPage, setNextPage] = useState("");
-  const [previousPage, setPreviousPage] = useState("");
 
   const onPaginationClick = (results) => {
-    const tempPokemonList = [];
     results.forEach((element) => {
-      const pokemonDetail = gethttp(`https://pokeapi.co/api/v2/pokemon/${element.name}`);
-      tempPokemonList.push(pokemonDetail);
+      const pokemonDetail = gethttp(`https://pokeapi.co/api/v2/pokemon/${element.name}`).then(x=>  dispatch(pokemonSliceAction.addPokemon(x)))
     });
-
-    Promise.all(tempPokemonList).then(values => {
-      setPokemonlist(values);
-    })
   }
 
   const gethttp = async (url) => {
@@ -47,10 +40,8 @@ function PokemonList() {
   const getPokemon = (url) => {
     gethttp(url)
       .then(list => {
-        setTotalCount(list.count)
-        setNextPage(list.next)
-        setPreviousPage(list.previous)
-        onPaginationClick(list.results)
+         onPaginationClick(list.results)
+        dispatch(pokemonSliceAction.updatePokemonlist(list))
       })
   }
 
@@ -59,14 +50,14 @@ function PokemonList() {
   }
 
   useEffect(() => {
-    getPokemon("https://pokeapi.co/api/v2/pokemon")
+    getPokemon("https://pokeapi.co/api/v2/pokemon");
   }, []);
 
   return (
     <>
       {!isLoading && (
         <div className="row m-0 py-3">
-          {pokemonList?.map((props) => (
+          {pDetailList?.map((props) => (
             <div key={props.name} className="col-md-2 col-6 p-3">
               <Card pokemon={props} />
             </div>
