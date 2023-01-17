@@ -1,55 +1,73 @@
 import "./PokemonList.scss";
 import Card from "../components/UI/Card";
-import useHttp from "../hooks/use-http";
 import Pagination from "./UI/Pagination";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { pokemonSliceAction } from "../store/pokemonSlice";
 
 function PokemonList() {
-  const { isLoading, error, sendRequest: fetch1 } = useHttp();
-  const [pokemonList, setPokemonlist] = useState([]);
+  const dispatch = useDispatch();
+  const list = useSelector((state) => state.pokemon.currentIds);
+  const pDetailList = useSelector((state) => state.pokemon.plist);
+  const totalCount = useSelector((state) => state.pokemon.count);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
-  const [nextPage, setNextPage] = useState("");
+
+  const onPaginationClick = (results) => {
+    results.forEach((element) => {
+      const pokemonDetail = gethttp(
+        `https://pokeapi.co/api/v2/pokemon/${element.name}`
+      ).then((x) => dispatch(pokemonSliceAction.addPokemon(x)));
+    });
+  };
+
+  const gethttp = async (url) => {
+    setIsLoading(true);
+    setError(null);
+    let returnDataSet = [];
+    try {
+      const response = await fetch(url);
+      const retData = await response.json();
+      returnDataSet = retData;
+    } catch (error) {
+      setError(error.message || "Something went wrong");
+      returnDataSet = [];
+    }
+    setIsLoading(false);
+    return returnDataSet;
+  };
+
+  const getPokemon = (url) => {
+    gethttp(url).then((list) => {
+      onPaginationClick(list.results);
+      dispatch(pokemonSliceAction.updatePokemonlist(list));
+    });
+  };
+
+  const handlePaginationClick = (page, totalCount) => {
+    getPokemon(
+      `https://pokeapi.co/api/v2/pokemon?offset=${(page - 1) * 20}&limit=20`
+    );
+  };
+
+  const renderList = (arraylist) => {
+    let start = 0;
+    if (currentPage > 1) {
+      start = (currentPage - 1) * 20;
+    }
+    return arraylist.filter((x) => x.id > start && x.id <= start + 20);
+  };
 
   useEffect(() => {
-    const getData = (data) => {
-      let tempList = [];
-      setTotalCount(data.count);
-      setNextPage(data.next);
-      data.results.forEach((element) => {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${element.name}`)
-          .then((data) => data.json())
-          .then((list) => {
-            tempList.push(list);
-            setPokemonlist(tempList);
-          });
-      });
-    };
-    fetch1({ url: "https://pokeapi.co/api/v2/pokemon" }, getData);
-  }, [fetch1]);
-
-  const paginationData = (url) => {
-    const getData = (data) => {
-      let tempList = [];
-      setTotalCount(data.count);
-      setNextPage(data.next);
-      data.results.forEach((element) => {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${element.name}`)
-          .then((data) => data.json())
-          .then((list) => {
-            tempList.push(list);
-            setPokemonlist(tempList);
-          });
-      });
-    };
-    fetch1({ url }, getData);
-  };
+    getPokemon("https://pokeapi.co/api/v2/pokemon");
+  }, []);
 
   return (
     <>
       {!isLoading && (
         <div className="row m-0 py-3">
-          {pokemonList?.map((props) => (
+          {renderList(pDetailList)?.map((props) => (
             <div key={props.name} className="col-md-2 col-6 p-3">
               <Card pokemon={props} />
             </div>
@@ -65,7 +83,7 @@ function PokemonList() {
         pageSize={20}
         onPageChange={(page) => {
           setCurrentPage(page);
-          paginationData(nextPage)
+          handlePaginationClick(page, totalCount);
         }}
       />
     </>
