@@ -7,7 +7,7 @@ import { pokemonSliceAction } from "../store/pokemonSlice";
 
 function PokemonList() {
   const dispatch = useDispatch();
-  const list = useSelector((state) => state.pokemon.currentIds);
+  // const list = useSelector((state) => state.pokemon.currentIds);
   const pDetailList = useSelector((state) => state.pokemon.plist);
   const totalCount = useSelector((state) => state.pokemon.count);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,9 +16,9 @@ function PokemonList() {
 
   const onPaginationClick = (results) => {
     results.forEach((element) => {
-      const pokemonDetail = gethttp(
-        `https://pokeapi.co/api/v2/pokemon/${element.name}`
-      ).then((x) => dispatch(pokemonSliceAction.addPokemon(x)));
+      gethttp(`https://pokeapi.co/api/v2/pokemon/${element.name}`).then((x) =>
+        dispatch(pokemonSliceAction.addPokemon(x))
+      );
     });
   };
 
@@ -61,7 +61,7 @@ function PokemonList() {
 
   useEffect(() => {
     getPokemon("https://pokeapi.co/api/v2/pokemon");
-  }, []);
+  },[]);
 
   return (
     <>

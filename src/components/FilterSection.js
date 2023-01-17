@@ -1,22 +1,22 @@
 import "./FilterSection.scss";
 import SearchBox from "./UI/SearchBox";
-import MultipleSelectDropdown from '../components/UI/MultipleSelectDropdown';
+// import MultipleSelectDropdown from '../components/UI/MultipleSelectDropdown';
 
 function FilterSection() {
-  const genderDataSet = [
-    { name: "Male" },
-    { name: "Femal" },
-    { name: "Unknow" }
-  ];
+  // const genderDataSet = [
+  //   { name: "Male" },
+  //   { name: "Femal" },
+  //   { name: "Unknow" }
+  // ];
 
-  const typeDataSet = [
-    { name: "Normal" },
-    { name: "Rock" },
-    { name: " Native" },
-    { name: "Fire" },
-    { name: "Water" },
-    { name: "Javascript" },
-  ];
+  // const typeDataSet = [
+  //   { name: "Normal" },
+  //   { name: "Rock" },
+  //   { name: " Native" },
+  //   { name: "Fire" },
+  //   { name: "Water" },
+  //   { name: "Javascript" },
+  // ];
 
   return (
     <>
