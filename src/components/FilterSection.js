@@ -1,22 +1,22 @@
 import "./FilterSection.scss";
 import SearchBox from "./UI/SearchBox";
-// import MultipleSelectDropdown from '../components/UI/MultipleSelectDropdown';
+import MultipleSelectDropdown from "../components/UI/MultipleSelectDropdown";
 
 function FilterSection() {
-  // const genderDataSet = [
-  //   { name: "Male" },
-  //   { name: "Femal" },
-  //   { name: "Unknow" }
-  // ];
+  const genderDataSet = [
+    { name: "Male" },
+    { name: "Femal" },
+    { name: "Unknow" }
+  ];
 
-  // const typeDataSet = [
-  //   { name: "Normal" },
-  //   { name: "Rock" },
-  //   { name: " Native" },
-  //   { name: "Fire" },
-  //   { name: "Water" },
-  //   { name: "Javascript" },
-  // ];
+  const typeDataSet = [
+    { name: "Normal" },
+    { name: "Rock" },
+    { name: " Native" },
+    { name: "Fire" },
+    { name: "Water" },
+    { name: "Javascript" },
+  ];
 
   return (
     <>
@@ -26,19 +26,11 @@ function FilterSection() {
         </div>
         <div className="col-md-2 d-md-inline d-none">
           <label className="w-100 form-label">Type</label>
-          {/* <MultipleSelectDropdown placeholder={'Please Select Type'} dataSet={typeDataSet}/> */}
-          <input
-            className="w-100  form-control "
-            placeholder="Type"
-          />
+          <MultipleSelectDropdown placeholder={'Please Select Type'} dataSet={typeDataSet}/>
         </div>
         <div className="col-md-2 d-md-inline d-none">
           <label className="w-100 form-label">Gender</label>
-          {/* <MultipleSelectDropdown placeholder={'Please Select Gender'} dataSet={genderDataSet}/> */}
-          <input
-            className="w-100  form-control "
-            placeholder="Gender"
-          />
+          <MultipleSelectDropdown placeholder={'Please Select Gender'} dataSet={genderDataSet}/>
         </div>
         <div className="col-md-2 d-none d-md-inline ">
           <label className="w-100 form-label">Stats</label>

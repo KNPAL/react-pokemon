@@ -10,10 +10,19 @@ function App() {
   return (
     <>
       <div className="container-fluid h-100 px-5">
-        <HeaderSection />
-        <FilterSection />
+        <div className="row">
+          <HeaderSection />
+        </div>
         <Provider store={store}>
-          <PokemonList />
+          <div className=" position-relative">
+            <div className="row  m-0 position-absolute w-100  filter-setting">
+              <FilterSection />
+            </div>
+          </div>
+
+          <div className="row mt-5 pt-5">
+            <PokemonList />
+          </div>
         </Provider>
       </div>
     </>
