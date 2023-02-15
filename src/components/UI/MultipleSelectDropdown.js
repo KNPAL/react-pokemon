@@ -8,7 +8,7 @@ function MultipleSelectDropdown(props) {
   const [currentDrp,setCurrentDropdown]=useState();
 
   const onSelectHandler = (event) => {
-    const selectbtn = event.target;//document.querySelector(".selectbtn");
+    const selectbtn = event.target || event;
     setCurrentDropdown(selectbtn);
     selectbtn.classList.toggle("open");
   };
@@ -19,7 +19,7 @@ function MultipleSelectDropdown(props) {
   };
 
   const handler = (item) => {
-    console.log(currentDrp)
+    //console.log(currentDrp)
     item.classList.toggle("checked");
 
     let checked = currentDrp.nextSibling.querySelectorAll('.checked'), // document.querySelectorAll(".checked"),
@@ -41,22 +41,25 @@ function MultipleSelectDropdown(props) {
     }
   };
 
-  const onCancelClick = () => {
+  const onCancelClick = (event) => {
     selectedValue.forEach((element) => {
       element.classList.remove("checked");
     });
-    setSelectedValue([]);
-    setPlaceholder(props.placeholder);
+    handler(currentDrp);
   };
 
-  const onApplyClick = () => {
-    console.log(selectedValue);
-    onSelectHandler();
+  const onApplyClick = (event) => {
+    const drpElement = event.target.parentElement.parentElement.parentElement.previousSibling;
+     onSelectHandler(drpElement);
   };
 
   const onItemChildClickHandler = (event) => {
     handler(event.target.parentElement);
   };
+
+  const onArrowdownClick = (event)=>{
+    onSelectHandler(event.target.parentElement);
+  }
 
   useEffect(() => {
     setDrpDataSet(props.dataSet);
@@ -66,9 +69,9 @@ function MultipleSelectDropdown(props) {
   return (
     <>
       <div onClick={onSelectHandler} className='selectbtn'>
-        <span className='btnText'>{drpPlaceholder}</span>
-        <span className='arrowdwn'>
-          <i className="fa-solid fa-chevron-down"></i>
+        <span className='btnText' >{drpPlaceholder}</span>
+        <span className='arrowdwn'  onClick={onArrowdownClick}>
+          <i className="fa-solid fa-chevron-down"  ></i>
         </span>
       </div>
       <ul className='listitems'>

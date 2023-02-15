@@ -1,13 +1,13 @@
 
 .selectbtn {
   display: flex;
-  height: 50px;
+  height: 36px;
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
   border-radius: 8px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: #C9DDE2 !important;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -19,8 +19,8 @@
 
 .selectbtn .arrowdwn {
   display: flex;
-  height: 21px;
-  width: 21px;
+  height: 15px;
+  width: 15px;
   color: #fff;
   font-size: 14px;
   border-radius: 50%;
@@ -36,10 +36,10 @@
 
 .listitems {
   position: relative;
-  margin-top: 15px;
+  margin-top: 3px;
   border-radius: 8px;
   padding: 16px;
-  background-color: #fff;
+  background-color: #C9DDE2 !important;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   display: none;
 }
@@ -52,7 +52,7 @@
   display: flex;
   align-items: center;
   list-style: none;
-  height: 50px;
+  height: 36px;
   cursor: pointer;
   transition: 0.3s;
   padding: 0 15px;
